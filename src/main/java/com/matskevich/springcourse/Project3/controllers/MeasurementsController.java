@@ -1,6 +1,7 @@
 package com.matskevich.springcourse.Project3.controllers;
 
 import com.matskevich.springcourse.Project3.dto.MeasurementDTO;
+import com.matskevich.springcourse.Project3.dto.MeasurementsResponse;
 import com.matskevich.springcourse.Project3.models.Measurement;
 import com.matskevich.springcourse.Project3.services.MeasurementService;
 import com.matskevich.springcourse.Project3.util.MeasurementValidator;
@@ -34,9 +35,9 @@ public class MeasurementsController {
     }
 
     @GetMapping
-    public List<MeasurementDTO> getMeasurements() {
-        return measurementService.findAll().stream().map(this::convertToMeasurementDTO)
-                .collect(Collectors.toList());
+    public MeasurementsResponse getMeasurements() {
+        return new MeasurementsResponse(measurementService.findAll().stream().map(this::convertToMeasurementDTO)
+                .collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
