@@ -2,9 +2,6 @@ package com.matskevich.springcourse.Project3.dto;
 
 import com.matskevich.springcourse.Project3.models.Sensor;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

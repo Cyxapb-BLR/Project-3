@@ -29,4 +29,7 @@ public class SensorService {
     public void save(Sensor sensor) {
         sensorRepository.save(sensor);
     }
+    public Sensor findByName(String name){
+      return   sensorRepository.findByName(name);
+    }
 }
