@@ -3,14 +3,19 @@ package com.matskevich.springcourse.Project3.util;
 import com.matskevich.springcourse.Project3.models.Measurement;
 import com.matskevich.springcourse.Project3.services.MeasurementService;
 import com.matskevich.springcourse.Project3.services.SensorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Component
 public class MeasurementValidator implements Validator {
-    private static MeasurementService measurementService;
-    private static SensorService sensorService;
+    private final SensorService sensorService;
+
+    @Autowired
+    public MeasurementValidator(SensorService sensorService) {
+        this.sensorService = sensorService;
+    }
 
     @Override
     public boolean supports(Class<?> clazz) {

@@ -3,6 +3,9 @@ package com.matskevich.springcourse.Project3.controllers;
 import com.matskevich.springcourse.Project3.dto.MeasurementDTO;
 import com.matskevich.springcourse.Project3.models.Measurement;
 import com.matskevich.springcourse.Project3.services.MeasurementService;
+import com.matskevich.springcourse.Project3.util.MeasurementValidator;
+import com.matskevich.springcourse.Project3.util.SensorOrMeasurementErrorResponse;
+import com.matskevich.springcourse.Project3.util.SensorOrMeasurementException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,11 +24,13 @@ import static com.matskevich.springcourse.Project3.util.ErrorsUtil.returnErrorsT
 public class MeasurementsController {
     private final MeasurementService measurementService;
     private final ModelMapper modelMapper;
+    private final MeasurementValidator measurementValidator;
 
     @Autowired
-    public MeasurementsController(MeasurementService measurementService, ModelMapper modelMapper) {
+    public MeasurementsController(MeasurementService measurementService, ModelMapper modelMapper, MeasurementValidator measurementValidator) {
         this.measurementService = measurementService;
         this.modelMapper = modelMapper;
+        this.measurementValidator = measurementValidator;
     }
 
     @GetMapping
@@ -43,6 +48,7 @@ public class MeasurementsController {
     public ResponseEntity<HttpStatus> add(@RequestBody @Valid MeasurementDTO measurementDTO,
                                           BindingResult bindingResult) {
         Measurement measurement = convertToMeasurement(measurementDTO);
+        measurementValidator.validate(measurement, bindingResult);
 
         returnErrorsToClient(bindingResult);
 
@@ -53,6 +59,15 @@ public class MeasurementsController {
     @GetMapping("/rainyDaysCount")
     public Integer getRainyDaysCount() {
         return measurementService.getAllMeasurementsWithRaining();
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<SensorOrMeasurementErrorResponse> handleException(SensorOrMeasurementException e) {
+        SensorOrMeasurementErrorResponse response = new SensorOrMeasurementErrorResponse(
+                e.getMessage(),
+                System.currentTimeMillis()
+        );
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     public Measurement convertToMeasurement(MeasurementDTO measurementDTO) {

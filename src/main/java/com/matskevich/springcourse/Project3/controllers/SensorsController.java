@@ -3,6 +3,8 @@ package com.matskevich.springcourse.Project3.controllers;
 import com.matskevich.springcourse.Project3.dto.SensorDTO;
 import com.matskevich.springcourse.Project3.models.Sensor;
 import com.matskevich.springcourse.Project3.services.SensorService;
+import com.matskevich.springcourse.Project3.util.SensorOrMeasurementErrorResponse;
+import com.matskevich.springcourse.Project3.util.SensorOrMeasurementException;
 import com.matskevich.springcourse.Project3.util.SensorValidator;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -52,6 +54,15 @@ public class SensorsController {
 
         sensorService.register(sensor);
         return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @ExceptionHandler
+    private ResponseEntity<SensorOrMeasurementErrorResponse> handleException(SensorOrMeasurementException e) {
+        SensorOrMeasurementErrorResponse response = new SensorOrMeasurementErrorResponse(
+                e.getMessage(),
+                System.currentTimeMillis()
+        );
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
     private Sensor converToSensor(SensorDTO sensorDTO) {
