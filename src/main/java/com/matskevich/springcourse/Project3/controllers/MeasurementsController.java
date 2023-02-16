@@ -12,7 +12,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,6 +53,11 @@ public class MeasurementsController {
         }
         measurementService.save(convertToMeasurement(measurementDTO));
         return ResponseEntity.ok(HttpStatus.OK);
+    }
+
+    @GetMapping("/rainyDaysCount")
+    public Integer getRainyDaysCount() {
+        return measurementService.getAllMeasurementsWithRaining();
     }
 
     public Measurement convertToMeasurement(MeasurementDTO measurementDTO) {

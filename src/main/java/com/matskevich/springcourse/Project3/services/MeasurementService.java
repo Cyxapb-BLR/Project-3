@@ -35,6 +35,10 @@ public class MeasurementService {
         measurementRepository.save(measurement);
     }
 
+    public int getAllMeasurementsWithRaining() {
+        return measurementRepository.findByRaining(true).size();
+    }
+
     public void enrichMeasurement(Measurement measurement) {
         measurement.setSensor(sensorService.findByName(measurement.getSensor().getName()));
 
