@@ -40,7 +40,7 @@ public class MeasurementService {
     }
 
     public void enrichMeasurement(Measurement measurement) {
-        measurement.setSensor(sensorService.findByName(measurement.getSensor().getName()));
+        measurement.setSensor(sensorService.findByName(measurement.getSensor().getName()).get());
 
         measurement.setMeasurementDateTime(LocalDateTime.now());
     }
