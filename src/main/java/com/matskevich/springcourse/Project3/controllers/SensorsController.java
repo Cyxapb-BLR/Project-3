@@ -50,7 +50,7 @@ public class SensorsController {
 
         returnErrorsToClient(bindingResult);
 
-        sensorService.save(sensor);
+        sensorService.register(sensor);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

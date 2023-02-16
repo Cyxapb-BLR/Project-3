@@ -18,11 +18,11 @@ public class Measurement {
     @NotNull
     @Min(-100)
     @Max(100)
-    private double value;
+    private Double value;
 
     @Column(name = "raining")
     @NotNull
-    private boolean raining;
+    private Boolean raining;
 
     @NotNull
     @ManyToOne
@@ -45,7 +45,7 @@ public class Measurement {
         return value;
     }
 
-    public void setValue(double value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 
@@ -53,7 +53,7 @@ public class Measurement {
         return raining;
     }
 
-    public void setRaining(boolean raining) {
+    public void setRaining(Boolean raining) {
         this.raining = raining;
     }
 

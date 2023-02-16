@@ -3,7 +3,6 @@ package com.matskevich.springcourse.Project3.controllers;
 import com.matskevich.springcourse.Project3.dto.MeasurementDTO;
 import com.matskevich.springcourse.Project3.models.Measurement;
 import com.matskevich.springcourse.Project3.services.MeasurementService;
-import com.matskevich.springcourse.Project3.util.ErrorsUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -47,7 +46,7 @@ public class MeasurementsController {
 
         returnErrorsToClient(bindingResult);
 
-        measurementService.save(measurement);
+        measurementService.add(measurement);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

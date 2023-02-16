@@ -27,7 +27,7 @@ public class SensorService {
         return sensorRepository.findById(id).orElse(null);
     }
 
-    public void save(Sensor sensor) {
+    public void register(Sensor sensor) {
         sensorRepository.save(sensor);
     }
 

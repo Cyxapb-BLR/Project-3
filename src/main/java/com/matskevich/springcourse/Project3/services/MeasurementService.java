@@ -30,7 +30,7 @@ public class MeasurementService {
     }
 
     @Transactional
-    public void save(Measurement measurement) {
+    public void add(Measurement measurement) {
         enrichMeasurement(measurement);
         measurementRepository.save(measurement);
     }
