@@ -3,6 +3,7 @@ package com.matskevich.springcourse.Project3.controllers;
 import com.matskevich.springcourse.Project3.dto.SensorDTO;
 import com.matskevich.springcourse.Project3.models.Sensor;
 import com.matskevich.springcourse.Project3.services.SensorService;
+import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,9 +19,11 @@ import java.util.stream.Collectors;
 @RequestMapping("/sensors")
 public class SensorsController {
     private final SensorService sensorService;
+    private final ModelMapper modelMapper;
 
-    public SensorsController(SensorService sensorService) {
+    public SensorsController(SensorService sensorService, ModelMapper modelMapper) {
         this.sensorService = sensorService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping
@@ -54,14 +57,10 @@ public class SensorsController {
     }
 
     private Sensor converToSensor(SensorDTO sensorDTO) {
-        Sensor sensor = new Sensor();
-        sensor.setName(sensorDTO.getName());        // TODO modelMapper
-        return sensor;
+        return modelMapper.map(sensorDTO, Sensor.class);
     }
 
     private SensorDTO convertToSensorDTO(Sensor sensor) {
-        SensorDTO sensorDTO = new SensorDTO();
-        sensorDTO.setName(sensor.getName());        //TODO modelMapper
-        return sensorDTO;
+        return modelMapper.map(sensor, SensorDTO.class);
     }
 }

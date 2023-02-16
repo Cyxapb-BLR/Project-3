@@ -3,6 +3,7 @@ package com.matskevich.springcourse.Project3.controllers;
 import com.matskevich.springcourse.Project3.dto.MeasurementDTO;
 import com.matskevich.springcourse.Project3.models.Measurement;
 import com.matskevich.springcourse.Project3.services.MeasurementService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/measurements")
 public class MeasurementsController {
     private final MeasurementService measurementService;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public MeasurementsController(MeasurementService measurementService) {
+    public MeasurementsController(MeasurementService measurementService, ModelMapper modelMapper) {
         this.measurementService = measurementService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping
@@ -54,21 +57,10 @@ public class MeasurementsController {
     }
 
     public Measurement convertToMeasurement(MeasurementDTO measurementDTO) {
-        Measurement measurement = new Measurement();
-        measurement.setValue(measurementDTO.getValue());
-        measurement.setRaining(measurementDTO.isRaining());
-        measurement.setSensor(measurementDTO.getSensor());
-        measurement.setMeasurementDateTime(LocalDateTime.now());
-
-        return measurement;
+        return modelMapper.map(measurementDTO, Measurement.class);
     }
 
-    public MeasurementDTO convertToMeasurementDTO(Measurement measurement) {    //TODO  modelMapper
-        MeasurementDTO measurementDTO = new MeasurementDTO();
-        measurementDTO.setValue(measurement.getValue());
-        measurementDTO.setRaining(measurement.isRaining());
-        measurementDTO.setSensor(measurement.getSensor());
-
-        return measurementDTO;
+    public MeasurementDTO convertToMeasurementDTO(Measurement measurement) {
+        return modelMapper.map(measurement, MeasurementDTO.class);
     }
 }
