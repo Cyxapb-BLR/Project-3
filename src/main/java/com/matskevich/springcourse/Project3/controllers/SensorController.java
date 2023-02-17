@@ -1,6 +1,7 @@
 package com.matskevich.springcourse.Project3.controllers;
 
 import com.matskevich.springcourse.Project3.dto.SensorDTO;
+import com.matskevich.springcourse.Project3.dto.SensorResponse;
 import com.matskevich.springcourse.Project3.models.Sensor;
 import com.matskevich.springcourse.Project3.services.SensorService;
 import com.matskevich.springcourse.Project3.util.ErrorResponse;
@@ -35,9 +36,9 @@ public class SensorController {
     }
 
     @GetMapping
-    public List<SensorDTO> getSensors() {
-        return sensorService.findAll().stream().map(this::convertToSensorDTO)
-                .collect(Collectors.toList());      //Jackson convert objects->JSON
+    public SensorResponse getSensors() {
+        return new SensorResponse(sensorService.findAll().stream().map(this::convertToSensorDTO)
+                .collect(Collectors.toList()));      //Jackson convert objects->JSON
     }
 
     @PostMapping("/registration")

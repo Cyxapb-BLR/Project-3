@@ -1,6 +1,7 @@
 package com.matskevich.springcourse.Project3.controllers;
 
 import com.matskevich.springcourse.Project3.dto.MeasurementDTO;
+import com.matskevich.springcourse.Project3.dto.MeasurementResponse;
 import com.matskevich.springcourse.Project3.models.Measurement;
 import com.matskevich.springcourse.Project3.services.MeasurementService;
 import com.matskevich.springcourse.Project3.util.ErrorResponse;
@@ -34,11 +35,10 @@ public class MeasurementController {
     }
 
     @GetMapping
-    public List<MeasurementDTO> getMeasurements() {
+    public MeasurementResponse getMeasurements() {
         List<Measurement> measurements = measurementService.findAll();
-
-        return measurements.stream().map(this::convertToMeasurementDTO)
-                .collect(Collectors.toList());      //Jackson convert objects->JSON
+        return new MeasurementResponse(measurements.stream().map(this::convertToMeasurementDTO)
+                .collect(Collectors.toList()));             //Jackson convert objects->JSON
 
     }
 

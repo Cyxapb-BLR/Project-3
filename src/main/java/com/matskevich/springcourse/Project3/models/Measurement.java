@@ -24,7 +24,7 @@ public class Measurement {
 
     @Column(name = "raining")
     @NotNull
-    private Boolean raining;
+    private Boolean isRaining;
 
     @ManyToOne
     @JoinColumn(name = "sensor", referencedColumnName = "name")
@@ -51,11 +51,11 @@ public class Measurement {
     }
 
     public Boolean isRaining() {
-        return raining;
+        return isRaining;
     }
 
     public void setRaining(Boolean raining) {
-        this.raining = raining;
+        isRaining = raining;
     }
 
     public Sensor getSensor() {

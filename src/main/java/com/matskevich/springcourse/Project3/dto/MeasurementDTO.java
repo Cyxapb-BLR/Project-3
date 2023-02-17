@@ -13,7 +13,7 @@ public class MeasurementDTO {
     private Double value;
 
     @NotNull
-    private Boolean raining;
+    private Boolean isRaining;
 
     @NotNull
     private Sensor sensor;
@@ -27,11 +27,11 @@ public class MeasurementDTO {
     }
 
     public Boolean getRaining() {
-        return raining;
+        return isRaining;
     }
 
-    public void isRaining(Boolean raining) {
-        this.raining = raining;
+    public void setRaining(Boolean raining) {
+        isRaining = raining;
     }
 
     public Sensor getSensor() {
