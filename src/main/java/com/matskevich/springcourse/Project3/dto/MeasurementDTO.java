@@ -30,7 +30,7 @@ public class MeasurementDTO {
         return raining;
     }
 
-    public void setRaining(Boolean raining) {
+    public void isRaining(Boolean raining) {
         this.raining = raining;
     }
 

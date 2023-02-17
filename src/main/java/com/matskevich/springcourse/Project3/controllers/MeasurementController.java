@@ -57,6 +57,11 @@ public class MeasurementController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @GetMapping("/rainyDaysCount")
+    public Long rainyDaysCount() {
+        return measurementService.findAll().stream().filter(Measurement::isRaining).count();
+    }
+
     @ExceptionHandler
     private ResponseEntity<ErrorResponse> handleException(SensorOrMeasurementException e) {
         ErrorResponse response = new ErrorResponse(e.getMessage(), System.currentTimeMillis());
