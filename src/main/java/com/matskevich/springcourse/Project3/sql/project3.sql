@@ -12,3 +12,5 @@ CREATE TABLE Measurement
     sensor                varchar(30) references Sensor (name),
     measurement_date_time timestamp                                                                            NOT NULL
 );
+
+TRUNCATE TABLE Sensor CASCADE;
