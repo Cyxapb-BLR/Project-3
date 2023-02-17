@@ -4,6 +4,7 @@ import com.matskevich.springcourse.Project3.dto.SensorDTO;
 import com.matskevich.springcourse.Project3.models.Sensor;
 import com.matskevich.springcourse.Project3.services.SensorService;
 import com.matskevich.springcourse.Project3.util.SensorOrMeasurementException;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +20,12 @@ import java.util.stream.Collectors;
 @RequestMapping("/sensors")
 public class SensorController {
     private final SensorService sensorService;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public SensorController(SensorService sensorService) {
+    public SensorController(SensorService sensorService, ModelMapper modelMapper) {
         this.sensorService = sensorService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping
@@ -50,18 +53,12 @@ public class SensorController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
-    private SensorDTO convertToSensorDTO(Sensor sensor) {  //TODO modelMapper
-        SensorDTO sensorDTO = new SensorDTO();
-        sensorDTO.setName(sensor.getName());
-
-        return sensorDTO;
+    private SensorDTO convertToSensorDTO(Sensor sensor) {
+        return modelMapper.map(sensor, SensorDTO.class);
     }
 
     private Sensor convertToSensor(SensorDTO sensorDTO) {
-        Sensor sensor = new Sensor();
-        sensor.setName(sensorDTO.getName());
-
-        return sensor;
+        return modelMapper.map(sensorDTO, Sensor.class);
     }
 
 }
