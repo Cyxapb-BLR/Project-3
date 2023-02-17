@@ -11,12 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.matskevich.springcourse.Project3.util.ErrorUtil.returnErrorsToClient;
 
 @RestController
 @RequestMapping("/measurements")
@@ -49,14 +50,7 @@ public class MeasurementController {
         measurementValidator.validate(measurement, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            StringBuilder errorMsg = new StringBuilder();
-            List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-            for (FieldError error : fieldErrors) {
-                errorMsg.append(error.getField())
-                        .append(" - ").append(error.getDefaultMessage())
-                        .append(";");
-            }
-            throw new SensorOrMeasurementException(errorMsg.toString());
+            returnErrorsToClient(bindingResult);
         }
         measurementService.add(measurement);
 
